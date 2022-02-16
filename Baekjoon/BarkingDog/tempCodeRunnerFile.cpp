@@ -1,20 +1,5 @@
+ // for(int i = 0; i < n; i++) cout << v1[i] << " ";
+    // cout << "\n";
 
-        // auto cursor = ll.end();
-
-        // for(auto c : str){
-        //     switch(c){
-        //         case '<' : 
-        //         ll.erase(cursor);
-        //         cursor--; 
-        //         break;
-        //         case '>' : 
-        //         cursor++;
-        //         break;
-        //         case '-' : 
-        //         ll.erase(cursor);
-        //         cursor--; 
-        //         ll.erase(cursor);
-        //         cursor--; 
-        //         break;
-        //     }
-        // }
+    // for(int i = 0; i < n; i++) cout << v2[i] << " ";
+    // cout << "\n";
