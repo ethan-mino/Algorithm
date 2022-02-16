@@ -3,38 +3,86 @@ using namespace std;
 
 const int MAX = 1000005;
 int dat[2 * MAX + 1];
-int head = MAX, tail = MAX; // 큐에서는 앞쪽에서는 제거만 발생하고, 뒷쪽에서는 삽입만 발생하다보니 배열 내에서 실제 큐에 들어간 원소들이 차지하는 공간이 점점 오른쪽으로 이동하면서 확장하는 모양이었음. 
-                            // 하지만, 덱에서는 양쪽에서 모두 삽입이 가능하기 때문에 양쪽으로 확장해야함. 
-                            // 따라서 시작 지점을 0번지로 뒀을 경우 왼쪽으로 확장할 수 없기 때문에 시작 지점을 배열의 중간으로 두어야 함. 
-                            // 따라서 배열의 크기는 2 * MAX + 1, head와 taildㅢ 초기 값이 0이 아니라 MAX
+int head = MAX, tail = MAX; 
 
-
-void push_front(){
-    
+int size(){
+    return tail - head;
 }
 
-void push_back(){
-
+int empty(){
+    if(size() == 0)
+        return 1;
+    else 
+        return 0;
 }
 
-void pop_front(){
-
+void push_front(int x){
+    dat[--head] = x;
 }
 
-void pop_back(){
+void push_back(int x){
+    dat[tail++] = x;
+}
 
+int pop_front(){
+    if(empty())
+        return -1;
+    else 
+        return dat[head++];
+}
+
+int pop_back(){
+   if(empty())
+        return -1;
+    else 
+        return dat[--tail];
 }
 
 int front(){
-
+    if(empty())
+        return -1;
+    else    
+        return dat[head];
 }
 
 int back(){
-
+    if(empty())
+        return -1;
+    else    
+        return dat[tail - 1];
 }
 
 int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
 
+    int n;
+    cin >> n;
+
+    while(n--){
+        string op;
+        cin >> op;
+
+        if(op == "push_front"){
+            int c;
+            cin >> c;
+            push_front(c);
+        }else if(op == "push_back"){
+            int c;
+            cin >> c;
+            push_back(c);
+        }else if(op == "pop_front"){
+            cout << pop_front() << "\n";
+        }else if(op == "pop_back"){
+            cout << pop_back() << "\n";
+        }else if(op == "size"){
+            cout << size() << "\n";
+        }else if(op == "empty"){
+            cout << empty() << "\n";
+        }else if(op == "front"){
+            cout << front() << "\n";
+        }else if(op == "back"){
+            cout << back() << "\n";
+        }
+    }
 }

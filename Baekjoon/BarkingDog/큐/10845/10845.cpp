@@ -2,7 +2,7 @@
 
 using namespace std;
 
-const int MAX = 1000005;
+const int MAX = 2000005;
 int dat[MAX];
 int head = 0, tail = 0; // head는 가장 앞에 있는 원소의 인덱스이고, tail은 가장 뒤에 있는 원소의 인덱스 + 1 (tail을 가장 마지막의 원소의 인덱스로 두어도 됨.)
 
