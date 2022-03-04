@@ -16,7 +16,7 @@ using ll = long long;
 
 ll mod(int a, int b, int m){
     ll ans = 1;
-    while(b--) {ans = ans * a % m; cout << ans << "\n";}
+    while(b--) {ans = ans * a % m;}
     return ans;
 }
 
