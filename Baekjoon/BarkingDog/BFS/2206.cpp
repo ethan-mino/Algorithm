@@ -16,7 +16,6 @@ int bfs(pair<int, int> s, int s_vis, int n, int m, int wall){ // 깰 수 있는 
     q.push(s);
     vis[s.x][s.y][wall] = s_vis;
     int ans = 0;
-    int cnt = 3;
 
     while(!q.empty()){
         pair<int, int> cur = q.front(); q.pop();
@@ -31,16 +30,17 @@ int bfs(pair<int, int> s, int s_vis, int n, int m, int wall){ // 깰 수 있는 
             && ((nx >= 1 && nx < n - 1 && board[nx - 1][ny] == 0 && board[nx + 1][ny] == 0)
             || (ny >= 1 && ny < m - 1 && board[nx][ny - 1] == 0 && board[nx][ny + 1] == 0))){ // 벽이면서, 벽의 상하 또는 좌우가 벽이 아닌 경우, 해당 벽을 길로 만들고 탐색
                 if(vis[nx][ny][0] == 0 // 아직 방문하지 않았거나 
-                || ((vis[cur.x][cur.y][1] + 1 < vis[nx][ny][0]) && vis[cur.x][cur.y][1] + 1 < vis[nx][ny][0])){ // 깰 수 있는 벽이 없는 경우, 깰 수 있는 벽이 있는 경우보다 더 빠르게 도착하는 경우
+                || (vis[cur.x][cur.y][1] + 1 < vis[nx][ny][0] && vis[cur.x][cur.y][1] + 1 < vis[nx][ny][0])){ // 벽을 깼을 때, 깨지 않았을 때 보다 {nx, ny}에 더 빠르게 도착하는 경우
                     board[nx][ny] = 0;
                     bfs({nx, ny}, vis[cur.x][cur.y][wall] + 1, n, m, 0);    // 깰 수 있는 벽의 수를 0으로 만들고 해당 벽부터 탐색
-                    board[nx][ny] = 1;
+                    board[nx][ny] = 1;  // 벽 복원
                 }
             }
 
             if(board[nx][ny] == 1) continue;
 
-            if(vis[nx][ny][wall] == 0 || vis[cur.x][cur.y][wall] + 1 < vis[nx][ny][wall]){  // wall이 같을 때의 최단 거리보다 더 빠르게 도착할 수 있는 경우 탐색
+            // 아직 방문하지 않았거나, wall이 같을 때 기존의 최단 거리보다 더 빠르게 도착할 수 있는 경우 탐색 진행
+            if(vis[nx][ny][wall] == 0 || vis[cur.x][cur.y][wall] + 1 < vis[nx][ny][wall]){  
                 vis[nx][ny][wall] = wall;
                 vis[nx][ny][wall] = vis[cur.x][cur.y][wall] + 1;
                 q.push({nx, ny});
@@ -49,10 +49,10 @@ int bfs(pair<int, int> s, int s_vis, int n, int m, int wall){ // 깰 수 있는 
         }
     }
 
-    if(vis[n - 1][m - 1][0] == 0) ans = vis[n - 1][m - 1][1];
-    else ans = vis[n - 1][m - 1][0];
+    if(vis[n - 1][m - 1][0] == 0) ans = vis[n - 1][m - 1][1];  // 벽을 깬 경우 보다 벽을 깨지 않은 경우가 더 빨리 도착하는 경우
+    else ans = vis[n - 1][m - 1][0];    // 벽을 깬 경우가 더 빨리 도착하는 경우
 
-    if(ans == 0) return -1;
+    if(ans == 0) return -1; // 벽을 깼을 때, 깨지 않았을 때 모두 도착 지점에 도달할 수 없는 경우
     else return ans;
 }
 

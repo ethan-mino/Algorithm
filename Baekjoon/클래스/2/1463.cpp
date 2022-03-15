@@ -21,8 +21,8 @@ int main(){
 
     vector<string> v(a.size() + b.size());
     auto iter = set_intersection(a.begin(), a.end(), b.begin(), b.end(), v.begin());
-    v.erase(iter, v.end());
-    
+    v.resize(iter - v.begin());
+
     cout << v.size() << "\n";
     for(int i = 0; i < v.size(); i++)
         cout << v[i] << "\n";
