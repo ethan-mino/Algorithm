@@ -35,7 +35,6 @@ pair<int, int> rolling(pair<int, int> pos, int move){ // pos에서 move에 따�
     else {row[1] = col[1]; row[3] = col[3];} // 주사위 바닥면과 윗면 동기화
 
     pos = {nx, ny}; // pos 업데이트
-
     
     if(board[pos.x][pos.y] == 0) {  // 이동한 칸에 쓰여있는 수가 0이면
         board[pos.x][pos.y] = row[1];   // 주사위의 바닥면의 수가 칸에 복사된다
