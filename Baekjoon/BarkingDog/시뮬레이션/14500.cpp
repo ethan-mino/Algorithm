@@ -50,7 +50,6 @@ int main(){
             for(int k = 0; k < 5; k++){ // 각각의 테트로미노에 대해 반복
                 for(int a = 0; a < 4; a++){ // 각각의 시계 방향 회전에 대해 반복
                     for(int symm = 0; symm < 2; symm++){    // 각각의 대칭에 대해 반복
-                        // 
                         copy(tets[k].pos.begin(), tets[k].pos.end(), tpos.begin()); 
                         tn = tets[k].n;
                         tm = tets[k].m;
