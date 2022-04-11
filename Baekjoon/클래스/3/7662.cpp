@@ -1,42 +1,21 @@
 #include <bits/stdc++.h>
 using namespace std;
-void pv(string desc, vector<int> arr){
-    cout << desc << " : ";
-    for(int i = 0; i < arr.size(); i++)
-        cout << arr[i] << " ";
-    cout << "\n";
-}
 
-void insert(deque<int>& q, int n){
-    if(q.size() == 0) { // q에 원소가 없는 경우
-        q.push_back(n); // 마지막에 push
-    }else if(!q.empty() && q.back() <= n){  // back 요소보다 크거나 같은 경우, back에 push
-        q.push_back(n);
-    }else if(!q.empty() && q.front() >= n){ // front 요소보다 작거나 같은 경우, front에 push
-        q.push_front(n);
-    }else{
-        int left = 0, right = q.size() - 1;
-        int mid = (left + right) / 2;
-        while(left <= right){
-            mid = (left + right) / 2;
-            if(q[mid] <= n && n <= q[mid + 1])break;
-            else if(q[mid] < n) left = mid + 1;
-            else right = mid - 1;
+long long pop(priority_queue<int, vector<int>> & max_heap, 
+priority_queue<int, vector<int>, greater<int>> & min_heap, map<int, int> & m, int op){
+    long long top = LLONG_MAX;
+    while(true){
+        if(op == 0) {top = max_heap.top(); max_heap.pop();}
+        if(op == 1) {top = min_heap.top(); min_heap.pop();}
+        auto p = m.find(top);
+
+        if(p != m.end()) { // 유효한 숫자인 경우
+            if(p->second == 1) m.erase(p);
+            else p->second--;
+            break;   
         }
-        q.insert(q.begin() + (mid + 1), n);
     }
-}
-
-int pop_min(deque<int>& q){
-    int m = q.front();
-    q.pop_front();
-    return m;
-}
-
-int pop_max(deque<int>& q){
-    int m = q.back();
-    q.pop_back();
-    return m;
+    return top;
 }
 
 int main(){
@@ -45,31 +24,45 @@ int main(){
     int t; cin >> t;
     while(t--){
         int k; cin >> k;
-        deque<int> q;
+        priority_queue<int, vector<int>> max_heap;
+        priority_queue<int, vector<int>, greater<int>> min_heap;
+        map<int, int> m;    // 유효한 숫자만을 저장하는 map
+
         while(k--){
             char c; int v; 
             cin >> c; cin >> v;
 
             if(c == 'I'){
-                insert(q, v);
+                max_heap.push(v);
+                min_heap.push(v);
+                
+                auto p = m.find(v);
+                if(p == m.end()){   // map에 없는 숫자인 경우
+                    m.insert({v, 1});
+                }else{
+                    p->second++;
+                }
             }else{
-                if(q.size() > 0){
-                    if(v == -1) pop_min(q);    // 최솟값 삭제
-                    else pop_max(q);
+                if(!m.empty()){
+                    if(v == - 1){   // 최솟값 삭제
+                        pop(max_heap, min_heap, m, 1);
+                    }else{  // 최댓값 삭제
+                        pop(max_heap, min_heap, m, 0);
+                    }
                 }
             }
-            // cout << "q : ";
-            // for(int i = 0; i < q.size(); i++) cout << q[i] << " " ;
-            // cout << "\n";
         }
-        if(q.size() > 0){cout << q.back() << " " << q.front();} 
-        else cout << "EMPTY" << "\n";
+
+        if(m.size() > 0){
+            int max1 = pop(max_heap, min_heap, m, 0);
+            int min1;
+            if(m.size() > 0){
+                min1 = pop(max_heap, min_heap, m, 1);
+            }else min1 = max1;
+            cout << max1 << " " << min1 << "\n";
+        }else   cout << "EMPTY\n";
     }
 }   
-
-// 4
-
-  
 
 /*
 1
@@ -101,15 +94,4 @@ I 30
 I -30
 I 100
 D -1
-
 */
-
-// -45
-// 653 -45
-// -45
-// -45 -642
-// 45 -45 -642
-// 97 45 -45 -642
-// 45 - 45 -642
-// 45 -45
-// 333 45 -45

@@ -58,5 +58,7 @@ int main(){
         }else{
             insert(k);
         }
+        for(int i = 1; i <= size(); i++)    cout << heap[i] << " ";
+        cout << "\n";
     }
 }   

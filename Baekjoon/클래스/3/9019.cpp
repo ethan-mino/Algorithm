@@ -4,24 +4,6 @@ using namespace std;
 #define pre first
 #define op second
 
-int dslr(int op, int n){
-    if(op == 0){    // D 연산
-        return (2*n) % 10000;
-    }else if(op == 1){  // S 연산
-        if(n == 0) return 9999;
-        else return n - 1;
-    }else {  // L, R 연산
-        deque<int> q(4);
-        for(int i = 3; i >= 0; i--){q[i] = n % 10; n /= 10;}
-        if(op == 2) {q.push_back(q.front()); q.pop_front();}
-        if(op == 3) {q.push_front(q.back()); q.pop_back();}
-
-        int result = q[0];
-        for(int i = 1; i < 4; i++) result = result * 10 + q[i];
-        return result;
-    }
-}
-
 char c[4] = {'D', 'S', 'L', 'R'};
 pair<int, char> vis[10000];
 
@@ -31,46 +13,50 @@ int main(){
 
     int t; cin >> t;
     while(t--){
-        int a, b; cin >> a >> b;
+        int a, b;
+        cin >> a >> b;
         fill(vis, vis + 10000, make_pair(-2, ' '));
 
         queue<int> q;
         q.push(a);
         vis[a] = {-1, ' '};
-        while(!q.empty()){
+        bool end = false;
+        while(!q.empty() && !end){
             int cur = q.front(); q.pop();
-            //cout << "cur : " << cur << "\n";
+
             for(int op = 0; op < 4; op++){
-                int nx = dslr(op, cur);
-                //if(nx == 9999) cout << vis[9999].pre << " " << vis[9999].op << "\n";
-                //cout << "nx : " << nx << " " << q.size() << "\n";
+                int nx;
+                if(op == 0){    // D 연산
+                    nx = (2 * cur) % 10000;
+                }else if(op == 1){  // S 연산
+                    nx = (cur == 0) ? 9999 : cur - 1;
+                }else if(op == 2){  // L, R 연산
+                    nx = (cur % 1000) * 10 + (cur / 1000);
+                }else{
+                    nx = (cur / 10) + (cur % 10) * 1000;
+                }
+
                 if(vis[nx].pre >= -1) continue; // 이미 방문한 경우, 방문하지 않음
                 q.push(nx);
                 vis[nx].pre = cur;
                 vis[nx].op = c[op];
+                if(nx == b) end = true;
             }
+
         }
 
-        // for(int i = 0; i < 10000; i++) {
-        //     cout << i << " " << vis[i].pre << " " << vis[i].op << "\n";
-        //     //if(vis[i].pre < - 1) cout << "asd \n";
-        // }
-        
-        //cout << end << "\n";
         int cur = b;
-        vector<char> ops;
+        list<char> ops;
         while(true){
             if(cur == a) break;
-            ops.push_back(vis[cur].op);
+            ops.push_front(vis[cur].op);
             cur = vis[cur].pre;
         }
 
-        reverse(ops.begin(), ops.end());
         for(auto c : ops) cout << c;
         cout << "\n";
     }
 }   
-
 
 /*
 1
@@ -93,4 +79,10 @@ int main(){
 
 1 
 5000 9999
+
+1
+5000 8456
+
+1
+0 8456
 */
