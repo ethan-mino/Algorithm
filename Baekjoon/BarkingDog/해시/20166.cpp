@@ -78,6 +78,7 @@ int main(){
         cout << cnt << "\n";
     }
 }   
+
 /*
 3 4 3
 abcb
