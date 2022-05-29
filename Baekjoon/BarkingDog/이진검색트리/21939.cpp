@@ -34,7 +34,5 @@ int main(){
             db.erase({dict[p], p});
             dict.erase(p);
         }
-        //cout << "db : ";
-        //for(auto t : db) cout << t.first << " " << t.second << "\n";
     }
 }
