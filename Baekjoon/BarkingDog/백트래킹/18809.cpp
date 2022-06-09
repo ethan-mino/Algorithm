@@ -69,7 +69,7 @@ int main(){
             if(board[i][j] == 2) pos.push_back({i, j}); // 배양액을 뿌릴 수 있는 좌표 저장
         }
 
-    vector<int> pg, pr; // next_permutation을 이용하여 조합을 수행하기 위한 배열 
+    vector<int> pg, pr; // next_permutation을 이용하여 조합을 수행하기 위한 배열
                         // ex. 5C3의 경우 {0, 0, 1, 1, 1}
 
     for(int i = 0; i < pos.size(); i++){
