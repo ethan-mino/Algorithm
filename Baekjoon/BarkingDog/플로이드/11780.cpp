@@ -25,7 +25,6 @@ int main(){
         }
     }
 
-
     for(int pass = 1; pass <= n; pass++){
         for(int st = 1; st <= n; st++){
             for(int en = 1; en <= n; en++){
