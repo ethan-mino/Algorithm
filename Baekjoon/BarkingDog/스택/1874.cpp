@@ -1,69 +1,43 @@
 #include <bits/stdc++.h>
+
 using namespace std;
 
 int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
 
+    vector<char> orders;
     stack<int> s;
-    int cursor = 0;
-
-    int arr[100001];
-
-    int n;
-    cin >> n;
-
-    for(int i = 0; i < n; i++)
-        cin >> arr[i];
-    
-    vector<char> t;
-
-    for(int i = 1; i <= n; i++){
-        s.push(i);
-
-        t.push_back('+');
-
-        while(!s.empty() && s.top() == arr[cursor]){
-            cursor++;
-            t.push_back('-');
-            s.pop();
-        }
+    queue<int> seq;
+    int n; cin >> n;
+    for(int i = 0; i < n; i++) {
+        int c; cin >> c;
+        seq.push(c);
     }
 
-    if(!s.empty()){
+    bool success = true;
+    int cur = 1;    // 현재 스택에 넣을 숫자
+    while(cur <= n || s.size() != 0){
+        while(cur <= n && (s.empty() || seq.front() != s.top())){ // 수열의 다음 숫자가 나올 때까지 push
+            s.push(cur++);
+            orders.push_back('+');
+        }
+
+        // 다음 숫자가 나온 경우
+        if(s.top() != seq.front()) {
+            success = false;
+            break;
+        }
+
+        s.pop();
+        seq.pop();
+
+        orders.push_back('-');
+    }
+
+    if(success){
+        for(auto order : orders) cout << order << "\n";
+    }else{
         cout << "NO" << "\n";
     }
-    else{
-        for(auto c : t){
-            cout << c << "\n";
-        }
-    }
 }
-
-
-/*
-    int main(void) {
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    int n;
-    cin >> n;
-    stack<int> S;
-    int cnt = 1;
-    string ans;
-    while (n--) {
-        int t;
-        cin >> t;
-        while (cnt <= t) {
-        S.push(cnt++);
-        ans += "+\n";
-        }
-        if (S.top() != t) {
-        cout << "NO\n";
-        return 0;
-        }
-        S.pop();
-        ans += "-\n";
-    }
-    cout << ans;
-    }
-*/
