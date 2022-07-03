@@ -8,11 +8,11 @@ typedef pair<int, int> pii;
 #define x first
 #define y second
 #define SIZE 12
+#define INF 100000
 int weight[SIZE][SIZE];
-int n;
-pii st, en;
-
 int d[SIZE][1<<SIZE];  // d[cur][visted]는 현재 cur이고, visted를 방문한 상태일 때, 고객들을 모두 방문하고, 집으로 돌아가는 최소 비용
+int n;
+pii st, en; // 회사, 집의 위치
 
 int TSP(int cur, int visited){
     int &ret = d[cur][visited];
@@ -22,7 +22,7 @@ int TSP(int cur, int visited){
         return weight[cur][n + 1];
     }
 
-    ret=100000;
+    ret = INF;
     for(int i = 0; i <= n; i++){
         if(visited&(1<<i)) continue; // 이미 방문한 경우
         // 방문하지 않은 경우
