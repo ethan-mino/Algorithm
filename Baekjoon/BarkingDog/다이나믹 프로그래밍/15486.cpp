@@ -30,6 +30,35 @@ int main(){
     cout << *max_element(d + 1, d + n + 2);
 }
 
+/* 2번째 풀이
+#include <bits/stdc++.h>
+using namespace std;
+
+#define SIZE 1510000
+int term[SIZE];
+int price[SIZE];
+int d[SIZE];    // d[i]는 i - 1일까지 상담했을 때, 백준이가 얻을 수 있는 최대 수익
+
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    int n; cin >> n;
+    for(int i = 1; i <= n; i++){
+        cin >> term[i] >> price[i];
+    }
+
+    d[1] = 0;
+    for(int i = 1; i <= n + 1; i++){
+        int nx = i + term[i];
+        d[i] = max(d[i], d[i - 1]);
+        d[nx] = max(d[nx], d[i] + price[i]);
+    }
+
+    cout << d[n + 1] << "\n";
+}
+*/
+
 /*
 1   2   3   4   5   6   7   8   9   10  
 5   4   3   2   1   1   2   3   4   5

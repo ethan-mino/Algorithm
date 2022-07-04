@@ -1,80 +1,85 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define idx first
-#define benefit second
-
-int order[1000], tree1[1000], tree2[1000];
-pair<int, int> d[30];
+#define MAX_SECOND 1010
+#define MAX_FALL 32
+int pos[MAX_SECOND];
+int d[MAX_SECOND][MAX_FALL][3]; // d[t][w][p]는 T초에 w번 움직였을 때, p 위치에서 받을 수 있는 자두의 최대 개수
 
 int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
     int t, w; cin >> t >> w;
-    for(int i = 0; i < t; i++)
-        cin >> order[i];
 
-    if(order[t - 1] == 1) tree1[t - 1] = 1;
-    else tree2[t - 1] = 1;
+    for(int i = 1; i <= t; i++) cin >> pos[i];
 
-    vector<int> move; // 자두가 떨어지는 나무가 바뀌는 지점
-    for(int i = t - 2; i >= 0; i--){
-        if(order[i] == 1){
-            tree1[i] = tree1[i + 1] + 1;
-            tree2[i] = tree2[i + 1];
-        }else{
-            tree2[i] = tree2[i + 1] + 1;
-            tree1[i] = tree1[i + 1];
-        }
-        if(order[i] != order[i + 1]) move.push_back(i);
+    fill(&d[1][0][0], &d[MAX_SECOND - 1][MAX_FALL - 1][3], -1004);
+    if(pos[1] == 1){
+        d[1][0][1] = 1;
+        d[1][1][2] = 0;
+    }else{
+        d[1][0][1] = 0;
+        d[1][1][2] = 1;
     }
 
-    // for(int i = 0; i < t; i++) cout << tree1[i] << " ";
-    // cout << "\n";
+    for(int s = 2; s <= t; s++){
+        for(int m = 0; m <= w; m++){
+            // 위치를 옮긴 경우
+            d[s][m + 1][1] = max(d[s - 1][m + 1][1], d[s - 1][m][2]);
+            d[s][m + 1][2] = max(d[s - 1][m + 1][2], d[s - 1][m][1]);
 
-    // for(int i = 0; i < t; i++) cout << tree2[i] << " ";
-    // cout << "\n";
-    
-    for(auto c : move) cout << c << " ";
-    cout << "\n";
-    reverse(move.begin(), move.end());
-    
-    d[0] = {-1, tree1[0]};
-    for(int i = 1; i <= w; i++){    // i는 이동 가능한 횟수
-        int MAX = INT_MIN;
+            // 위치를 옮기지 않은 경우
+            d[s][m][1] = max(d[s][m][1], d[s - 1][m][1]);
+            d[s][m][2] = max(d[s][m][2], d[s - 1][m][2]);
 
-        for(int j = 0; j < move.size(); j++){
-             if(move[j] > d[i - 1].idx){
-                if(1&i){    // 앞서 이동한 횟수가 짝수인 경우
-                    int b = d[i - 1].benefit - (tree1[move[j]] - 1) + tree2[move[j] + 1];
-                    if(MAX < b){
-                        MAX = b;
-                        d[i].benefit = b; 
-                        d[i].idx = move[j];
-                    }
-                    
-                }else{  // 홀수인 경우
-                    int b = d[i - 1].benefit - (tree2[move[j]] - 1) + tree1[move[j] + 1];
-                    if(MAX < b){
-                        MAX = b;
-                        d[i].benefit = b; 
-                        d[i].idx = move[j];
-                    }
-                }
+            if(pos[s] == 1){
+                d[s][m][1]++;
+            }else{
+                d[s][m][2]++;
             }
         }
-        cout << "MAX_IDX : " << MAX << "\n";
     }
 
     int m = INT_MIN;
-    for(int i = 0; i <= w; i++) if(m < d[i].benefit) m = d[i].benefit;
-    for(int i = 0; i <= w; i++) cout << "(" << d[i].benefit << ", " << d[i].idx << ") ";
-    cout <<"\n";
-    cout << m << "\n";
-   
+    for(int i = 1; i <= t; i++){
+        for(int j = 0; j <= w; j++){
+            for(int k = 1; k < 3; k++){
+                m = max(m, d[i][j][k]);
+            }
+        }
+    }
+
+    cout << m;
 }   
 
-/* 
+/*
+8 1
+2
+1
+1
+2
+2
+2
+1
+1
+
+1 0
+1
+
+5 0
+2
+2
+2
+2
+2
+
+5 1
+1
+1
+1
+1
+1
+
 17 4
 1
 1
