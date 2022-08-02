@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class P_2615 {
+public class BOJ2615 {
     static int[] dx = {-1, -1, -1, 0, 1, 1, 1, 0};
     static int[] dy = {-1, 0, 1, 1, 1, 0, -1, -1};
     static final int boardSize = 19;

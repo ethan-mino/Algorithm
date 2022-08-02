@@ -10,7 +10,7 @@ class Pos{
     public Pos(int x, int y) {this.x = x; this.y = y;}
 }
 
-public class P_17406 {
+public class BOJ17406 {
     // 하우상좌
     static int n, m, k;
     static int ans = Integer.MAX_VALUE;
