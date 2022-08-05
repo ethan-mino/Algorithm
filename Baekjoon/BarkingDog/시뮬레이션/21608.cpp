@@ -14,6 +14,7 @@ int main(){
 
     cin >> n;
 
+    // 종아하는 학생인지 아닌지 배열을 순회화며 확인하지 않기 위해 map을 사용
     vector< pair<int, map<int, bool>>> v(n * n);
     map<int, map<int, bool>> m;
 
@@ -41,13 +42,15 @@ int main(){
                         int ny = j + dy[dir];
 
                         if(nx < 0 || ny < 0 || nx >= n || ny >= n) continue;
-                        if(board[nx][ny] == 0) {
+                        if(board[nx][ny] == 0) {    // 빈칸인 경우
                             cnt++;
                             continue;
                         }
 
-                        if(v[o].second[board[nx][ny]]) f++;
+                        if(v[o].second[board[nx][ny]]) f++; // 좋아하는 학생인 경우
                     }
+
+                    // 종아하는 학생과 빈 칸의 개수는 많은 순이지만, 좌표는 작은 순이라 정렬을 사용하지 않음
                     tuple<int, int, int, int> cur = {f, cnt, i, j};
                     if(get<0>(pos) < f) pos = cur;
                     else if(get<0>(pos) == f) {
@@ -62,6 +65,7 @@ int main(){
                 }
             }
         }
+        // 가장 높은 우선 순위의 칸에 학생 배정
         board[get<2>(pos)][get<3>(pos)] = v[o].first;
     }
 
@@ -75,6 +79,7 @@ int main(){
                 int ny = j + dy[dir];
 
                 if(nx < 0 || ny < 0 || nx >= n || ny >= n) continue;
+                // 좋아하는 학생의 인원수에 따라 점수 합계
                 if(m[board[i][j]][board[nx][ny]]) cnt++;
             }
             sum += s[cnt];
