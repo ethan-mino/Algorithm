@@ -15,11 +15,12 @@ public class SWEA6808 {
     static int lose = 0;
     static int win = 0;
     static boolean []sel = new boolean[9];
+    static int ans = 0;
     static void back(int th, int score1, int score2){
         if(th == 10){
             if(score1 > score2) win++;
             else if(score1 < score2) lose++;
-        }else{
+        }else {
             for(int i = 0; i < 9; i++){
                 if(!sel[i]){
                     sel[i] = true;
@@ -51,7 +52,7 @@ public class SWEA6808 {
                 if (!exist) p2[idx++] = i;
             }
 
-            back(1, 0, 0);
+            back(1, 0, 0);  // 1 ~ 9번째 게임
             bw.write("#" + tc + " " + win + " " + lose + "\n");
             bw.flush();
         }
