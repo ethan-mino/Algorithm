@@ -29,12 +29,12 @@ public class BO15686 {
         return Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y);
     }
     static int ans = Integer.MAX_VALUE;
-    static void combination(int th, int en, int pre){
-        if(th == en){
+    static void combination(int th, int pre){
+        if(th == m){
             int sum = 0;
             for(int i = 0; i < house.size(); i++){
                 int min = Integer.MAX_VALUE;
-                for(int j = 0; j < en; j++){
+                for(int j = 0; j < m; j++){
                     min = Math.min(min, dist[i][selChicken[j]]);
                 }
                 sum += min;
@@ -45,7 +45,7 @@ public class BO15686 {
                 if(!sel[cur]){
                     sel[cur] = true;
                     selChicken[th] = cur;
-                    combination(th + 1, en, cur);
+                    combination(th + 1, cur);
                     sel[cur] = false;
                 }
             }
@@ -72,8 +72,7 @@ public class BO15686 {
             }
         }
 
-        for(int i = 1; i <= m; i++) // 폐업시키지 않을 치킨집을 1개 ~ m개 선택
-            combination(0, i, -1);
+        combination(0, -1);
         System.out.println(ans);
     }
 }
