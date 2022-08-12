@@ -9,9 +9,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-class Pos{
+class Pos5{
     public int x, y;
-    public Pos(int x, int y){
+    public Pos5(int x, int y){
         this.x= x; this.y = y;
     }
 }
@@ -50,14 +50,14 @@ public class SWEA7733 {
                 for(int i = 0; i < n; i++){
                     for(int j = 0; j < n; j++){
                         if(board[i][j] != 0 && vis[i][j] == 0){
-                            Queue<Pos> q = new LinkedList<>();
+                            Queue<Pos5> q = new LinkedList<>();
 
-                            q.add(new Pos(i, j));
+                            q.add(new Pos5(i, j));
                             vis[i][j] = 1;
                             curArea++;
 
                             while(!q.isEmpty()){
-                                Pos cur = q.peek(); q.remove();
+                                Pos5 cur = q.peek(); q.remove();
 
                                 for(int dir = 0; dir < 4; dir++){
                                     int nx = cur.x + dx[dir];
@@ -65,7 +65,7 @@ public class SWEA7733 {
 
                                     if(nx < 0 || ny < 0 || nx >= n || ny >= n) continue;
                                     if(board[nx][ny] == 0 || vis[nx][ny] != 0) continue;
-                                    q.add(new Pos(nx, ny));
+                                    q.add(new Pos5(nx, ny));
                                     vis[nx][ny] = vis[cur.x][cur.y] + 1;
                                 }
                             }
