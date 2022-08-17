@@ -32,7 +32,7 @@ using namespace std;
 int p[1010], d[1010];   // d[i]는 카드 i개를 구매하기 위해 지불해야하는 금액의 최댓값
 int n;
 
-// Top-Down 방식의 다이나믹 프로그래밍
+// Top-Down 방식의 dynamic programming
 int dp(int n){  // 카드 n개를 구매하기 위해 지불해야하는 금액의 최댓값을 반환하는 함수
     if(d[n] != 0) return d[n];  // 이미 최댓값이 기록되어 있는 경우 해당 값 반환
     else{

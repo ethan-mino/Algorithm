@@ -14,7 +14,7 @@ int main(){
     d[1] = 9;   // 초기값
     for(int i = 1; i < 10; i++) pre[i] = 1; // 초기값
 
-    // Bottom-Up 방식의 다이나믹 프로그래밍
+    // Bottom-Up 방식의 dynamic programming
     for(int i = 2; i <= n; i++){      
         for(int j = 0; j <= 9; j++){
             if(j == 0) nxt[j] = pre[j + 1]; // 0으로 끝나는 N 단계의 계단 수는 1로 끝나는 N - 1 단계의 계단 
