@@ -25,7 +25,7 @@ int main(){
     }
 
     queue<int> q;   // indegree가 0인 정점들을 담는 큐
-    vector<int> result; // 위상 정렬 결과
+    vector<int> result; // Topology Sort 결과
     for(int v = 1; v <= n; v++)
         if(in[v] == 0) q.push(v);
         
