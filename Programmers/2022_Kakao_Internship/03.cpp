@@ -75,10 +75,8 @@ int solution(int alp, int cop, vector<vector<int>> problems){
             int nxCode = min(150, nx.node.code);
 
             if(dist[nxAlgo][nxCode] > dist[cur.node.algo][cur.node.code] + nx.w){
-                cout <<  cur.node.algo << " " << cur.node.code << " " << nxAlgo << " " << nxCode << "\n";
                 dist[nxAlgo][nxCode] = dist[cur.node.algo][cur.node.code] + nx.w;
                 q.push({dist[nxAlgo][nxCode], {nxAlgo, nxCode}});
-                // pre[nx.node.algo][nx.node.code] = cur.node;
             }
         }
     }
