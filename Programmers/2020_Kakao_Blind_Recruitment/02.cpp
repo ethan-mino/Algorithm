@@ -18,7 +18,6 @@ int solution(string s) {
             split.push_back(sub);
         }
 
-        int len = 0;
         int cur = 0;
         string com = "";
         while(cur < split.size()){
