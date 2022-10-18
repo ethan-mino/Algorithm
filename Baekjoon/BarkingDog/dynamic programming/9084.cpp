@@ -3,9 +3,28 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int d[10010]; // d[i][j]는 i번째까지의 코인을 이용하여 금액 j를 만들 수 있는 경우의 수
-int coin[21];
 int n;
+int coin[21];
+int dp[10010];  // dp[i]는 i의 돈을 만드는 모둔
+
+int dynamic(int money){
+    //cout << money << "\n";
+    if(money == 0) return 1;
+    else if (money < 0) return 0;
+    else if(dp[money] != 0) return dp[money];
+    else{
+        for(int i = 0; i < n; i++){
+            dp[money] += dynamic(money - coin[i]);
+        }
+
+        return dp[money];
+    }
+}
+
+int factorial(int n){
+    if(n <= 1) return 1;
+    else return n * factorial(n - 1);
+}
 
 int main(){
     ios::sync_with_stdio(0);
@@ -13,31 +32,34 @@ int main(){
 
     int t; cin >> t;
     while(t--){
-        fill(coin, coin + 21, 0);
-        fill(d, d + 10010, 0);
+        fill(dp, dp + 10010, 0);
 
-        cin >> n;
-        for(int i = 0; i < n; i++) cin >> coin[i];
-        int target; cin >> target;
-
-        d[0] = 0;
-        d[coin[0]] = 1;
-        for(int money = 1; money <= target; money++){
-            for(int j = 0; j < n; j++){
-                if(money - coin[j] > 0)
-                    d[money] += d[money - coin[j]];
-            }
+        int m;  cin >> n;
+        for(int i = 0; i < n; i++){
+            cin >> coin[i];
         }
 
-        for(int i =1 ; i <= target; i++)
-            cout << d[i] << " ";
-        cout << "\n\n";
+        cin >> m;
+        // 조합 nCr
+        // n!
+        // (n - r)! * r!
+        // n!
+        // n - r) !
+        cout << dynamic(m) / factorial(n) << "\n";
+        for(int i = 0; i <= m; i++) cout << i << " ";
+        cout << "\n";
 
-        cout << d[target] << "\n";
+        for(int i = 0; i <= m; i++) cout <<dp[i] << " ";
+        cout << "\n";
     }
 }
 
 /*
+1
+1
+1
+5
+
 1
 2
 1 2
