@@ -91,7 +91,7 @@ depth가 기준이 되는 유형은 현재 단계에서 원소를 선택하고, 
 ### 중복 순열
 중복 순열은 순열과 같지만, 같은 원소를 중복 선택 가능한 경우 문제에 적용시킬 수 있습니다.
 
-    static void back(int depth, int pre){
+    static void back(int depth){
         if(depth == n){
             // 1. 선택한 원소로 기반으로 결과를 계산하는 부분
         }else{
@@ -111,7 +111,7 @@ depth가 기준이 되는 유형은 현재 단계에서 원소를 선택하고, 
         if(depth == m){
             // 1. 선택한 원소로 기반으로 결과를 계산하는 부분
         }else{
-            for(int cur = pre + 1; cur < n; cur++){
+            for(int cur = pre + 1; cur < n; cur++){ // * cur의 시작점이 pre + 1
                 // 2. 원소를 선택하는 부분
                 selected[depth] = cur;  // depth 단계에서 선택한 값 저장
                 back(depth + 1, cur); 
